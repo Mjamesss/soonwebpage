@@ -19,36 +19,16 @@ const countdownFunction = setInterval(() => {
         clearInterval(countdownFunction);
         document.getElementById("countdown").innerHTML = "EXPIRED";
     }
-}, 1000);
-
-// Form submission
-document.getElementById("subscribe-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const name = document.getElementById("name").value;
-
-    const response = await fetch('/subscribe', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name }),
-    });
-
-    if (response.ok) {
-        alert('Thank you for subscribing!');
-        document.getElementById("name").value = '';
-    } else {
-        alert('Subscription failed. Please try again.');
-    }
 });
 
+// Form submission
 const form = document.getElementById('subscribe-form');
 const messageBox = document.getElementById('message');
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();  // Prevent the form from reloading the page
 
-    const name = document.getElementById('name').value;
+    const email = document.getElementById('name').value;  // Change from name to email
 
     try {
         const response = await fetch('http://localhost:5000/subscribe', {
@@ -56,12 +36,13 @@ form.addEventListener('submit', async (event) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name })
+            body: JSON.stringify({ email })  // Send email instead of name
         });
 
         if (response.ok) {
             const result = await response.json();
-            showMessage(result.message, 'success');  // Show success message
+            showMessage(result.message || 'Thank you for subscribing!', 'success');  // Show success message
+            document.getElementById("name").value = ''; // Clear input field
         } else {
             showMessage('Failed to subscribe. Please try again.', 'error');
         }
@@ -70,6 +51,7 @@ form.addEventListener('submit', async (event) => {
         showMessage('There was an error connecting to the server.', 'error');
     }
 });
+
 
 // Function to show messages
 function showMessage(message, type) {
@@ -82,4 +64,3 @@ function showMessage(message, type) {
         messageBox.style.display = 'none';
     }, 5000);
 }
-

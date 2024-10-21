@@ -29,13 +29,15 @@ db.connect((err) => {
 
 // Subscribe route
 app.post('/subscribe', (req, res) => {
-    const name = req.body.name;
-    const sql = 'INSERT INTO subscribers (name) VALUES (?)';
-    db.query(sql, [name], (err, result) => {
+    const email = req.body.email;  // Change from 'name' to 'email'
+    const sql = 'INSERT INTO subscribers (email) VALUES (?)';  // Change to email column
+
+    db.query(sql, [email], (err, result) => {
         if (err) return res.status(500).json({ message: 'Error saving to database' });
         res.status(200).json({ message: 'Subscription successful' });
     });
 });
+
 
 
 
