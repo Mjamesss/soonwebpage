@@ -10,10 +10,12 @@
     <div class="container">
         <h1>Coming Soon</h1>
         <div id="countdown"></div>
-        <form id="subscribe-form">
+        <form id="subscribe-form" method="POST" action="/subscribe">
             <input type="text" id="name" placeholder="Enter your name" required>
+            <div id="message" class="message"></div>
+
             <button type="submit">Subscribe</button>
-        </form>
+        </form>        
     </div>
     <script src="script.js"></script>
 </body>

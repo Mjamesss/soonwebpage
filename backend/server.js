@@ -10,16 +10,20 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// MySQL connection
+// MySQL connection (ensure this is before db.connect)
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'your_mysql_user',
-    password: 'your_mysql_password',
-    database: 'your_database_name'
+    host: 'localhost',         // Replace with your MySQL host
+    user: 'your_mysql_user',    // Replace with your MySQL username
+    password: 'your_password',  // Replace with your MySQL password
+    database: 'actual_db_name'  // Replace with the actual database name
 });
 
+// Connect to MySQL
 db.connect((err) => {
-    if (err) throw err;
+    if (err) {
+        console.error('Error connecting to MySQL:', err);
+        return;
+    }
     console.log('Connected to MySQL');
 });
 
@@ -32,6 +36,8 @@ app.post('/subscribe', (req, res) => {
         res.status(200).json({ message: 'Subscription successful' });
     });
 });
+
+
 
 // Start server
 app.listen(PORT, () => {
