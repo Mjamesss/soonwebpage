@@ -28,7 +28,7 @@ const messageBox = document.getElementById('message');
 form.addEventListener('submit', async (event) => {
     event.preventDefault();  // Prevent the form from reloading the page
 
-    const email = document.getElementById('name').value;  // Change from name to email
+    const name = document.getElementById('name').value;
 
     try {
         const response = await fetch('http://localhost:5000/subscribe', {
@@ -36,7 +36,7 @@ form.addEventListener('submit', async (event) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email })  // Send email instead of name
+            body: JSON.stringify({ name })
         });
 
         if (response.ok) {
@@ -51,7 +51,6 @@ form.addEventListener('submit', async (event) => {
         showMessage('There was an error connecting to the server.', 'error');
     }
 });
-
 
 // Function to show messages
 function showMessage(message, type) {
