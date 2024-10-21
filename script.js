@@ -22,13 +22,14 @@ const countdownFunction = setInterval(() => {
 });
 
 // Form submission
-const form = document.getElementById('subscribe-form');
+const form = document.getElementById('emailForm'); // Updated ID
 const messageBox = document.getElementById('message');
 
+// Event listener for form submission
 form.addEventListener('submit', async (event) => {
     event.preventDefault();  // Prevent the form from reloading the page
 
-    const name = document.getElementById('name').value;
+    const email = document.getElementById('emailInput').value; // Get the email input value
 
     try {
         const response = await fetch('http://localhost:5000/subscribe', {
@@ -36,13 +37,13 @@ form.addEventListener('submit', async (event) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name })
+            body: JSON.stringify({ email }) // Updated to use email
         });
 
         if (response.ok) {
             const result = await response.json();
             showMessage(result.message || 'Thank you for subscribing!', 'success');  // Show success message
-            document.getElementById("name").value = ''; // Clear input field
+            document.getElementById("emailInput").value = ''; // Clear input field
         } else {
             showMessage('Failed to subscribe. Please try again.', 'error');
         }
@@ -51,6 +52,7 @@ form.addEventListener('submit', async (event) => {
         showMessage('There was an error connecting to the server.', 'error');
     }
 });
+
 
 // Function to show messages
 function showMessage(message, type) {
